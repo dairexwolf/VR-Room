@@ -8,6 +8,10 @@ public class ChangeMaterial : MonoBehaviour
     [Tooltip("The material that's switched to.")]
     public Material otherMaterial = null;
 
+    [SerializeField]
+    [Tooltip("The light of object")]
+    private Light light;
+
     private bool usingOther = false;
     private MeshRenderer meshRenderer = null;
     private Material originalMaterial = null;
@@ -22,12 +26,20 @@ public class ChangeMaterial : MonoBehaviour
     {
         usingOther = true;
         meshRenderer.material = otherMaterial;
+        if (light != null)
+        {
+            light.enabled = true; 
+        }
     }
 
     public void SetOriginalMaterial()
     {
         usingOther = false;
         meshRenderer.material = originalMaterial;
+        if (light != null)
+        {
+            light.enabled = false;
+        }
     }
 
     public void ToggleMaterial()

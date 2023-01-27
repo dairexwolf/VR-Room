@@ -8,6 +8,10 @@ public class SBallSound : MonoBehaviour
     private AudioSource _audioSource;
     private Rigidbody _rigidbody;
 
+    [SerializeField]
+    [Tooltip("Playing sound")]
+    private AudioClip AudioClip;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,12 +21,19 @@ public class SBallSound : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (_rigidbody.velocity.magnitude < 10f && _rigidbody.velocity.magnitude > 1f)
-            _audioSource.volume = _rigidbody.velocity.magnitude / 10f;
-        else if (_rigidbody.velocity.magnitude > 10f)
-            _audioSource.volume = 1f;
+        float volume;
+        if (_rigidbody.velocity.magnitude > 10f)
+            volume = 1f;
+        else if (_rigidbody.velocity.magnitude < 10f && _rigidbody.velocity.magnitude > 1f)
+            volume = _rigidbody.velocity.magnitude / 10f;
         else
-            _audioSource.volume = 0f;
-        _audioSource.Play();
+            volume = 0f;
+        _audioSource.PlayOneShot(AudioClip, volume);
+    }
+
+    private void OnValidate()
+    {
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.playOnAwake = false;
     }
 }
