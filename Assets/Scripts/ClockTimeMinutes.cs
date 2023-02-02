@@ -11,14 +11,14 @@ public class ClockTimeMinutes : MonoBehaviour
     {
         min = DateTime.Now.Minute;
         int sec = 60 - DateTime.Now.Second;
-        transform.Rotate(30 * min, 0, 0);
+        transform.Rotate(6 * min, 0, 0);
         StartCoroutine(ArrowMove(sec));
     }
 
     IEnumerator ArrowMove(float sec)
     {
         yield return new WaitForSecondsRealtime(sec);
-        transform.Rotate(30, 0, 0);
+        transform.Rotate(6, 0, 0);
         yield return null;
         StartCoroutine(ArrowMove(60f));
     }
